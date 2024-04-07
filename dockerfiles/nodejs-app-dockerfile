@@ -1,0 +1,32 @@
+# Use a base image with Git installed
+FROM node:14 AS gitclone
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Install Git
+RUN apt-get update && apt-get install -y git
+
+# Clone files from the Git repository
+RUN git clone https://github.com/arthurescriou/redis-node.git .
+
+# Use a base image with Node.js installed
+FROM node:14
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json from the previous stage
+COPY --from=gitclone /usr/src/app/package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code from the previous stage
+COPY --from=gitclone /usr/src/app .
+
+# Expose the port your app runs on
+EXPOSE 3000
+
+# Command to run your Node.js application
+CMD ["node", "main.js"]
