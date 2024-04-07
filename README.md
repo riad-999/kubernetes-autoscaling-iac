@@ -14,3 +14,6 @@
 #### consulter 
 Application web sur <b>http://localhost</b> </br>
 Grafana sur <b>http://localhost:3000</b>
+
+#### Dcokerfiles 
+les images de node et react utilise sont heberge dans mon dockerhub, si vous vouler les docker utilses pour generer ces images consultez le folder dockerfiles 
