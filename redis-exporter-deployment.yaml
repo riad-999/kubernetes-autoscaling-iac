@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-main-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-main-exporter
+  template:
+    metadata:
+      labels:
+        app: redis-main-exporter
+    spec:
+      containers:
+        - name: redis-main-exporter
+          image: oliver006/redis_exporter:v1.24.0
+          args:
+            - "--redis.addr=redis-main-service.default.svc.cluster.local:6379"
+          ports:
+            - containerPort: 9121
+            
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-replica-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-replica-exporter
+  template:
+    metadata:
+      labels:
+        app: redis-replica-exporter
+    spec:
+      containers:
+        - name: redis-replica-exporter
+          image: oliver006/redis_exporter:v1.24.0
+          args:
+            - "--redis.addr=redis-replica-service.default.svc.cluster.local:6379"
+          ports:
+            - containerPort: 9121

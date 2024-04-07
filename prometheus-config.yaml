@@ -10,3 +10,15 @@ data:
       - job_name: "node-app"
         static_configs:
           - targets: ["node-service.default.svc.cluster.local"]
+      - job_name: "redis-main"
+        static_configs:
+          - targets: ["redis-main-exporter.default.svc.cluster.local:9121"]
+      - job_name: "redis-replica"
+        static_configs:
+          - targets: ["redis-replica-exporter.default.svc.cluster.local:9121"]
+
+
+
+
+          
+          

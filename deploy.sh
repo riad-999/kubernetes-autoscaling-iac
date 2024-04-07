@@ -33,7 +33,13 @@ sleep 30
 microk8s kubectl port-forward service/react-service 80:80 &
 
 # Prometheus deployment
-echo "[---Deployment prometheus---]" 
+echo "[---Deploying redis exporter---]" 
+microk8s kubectl apply -f redis-exporter-deployment.yaml
+microk8s kubectl apply -f redis-exporter-service.yaml
+
+sleep 10
+
+echo "[---Deploying prometheus---]" 
 microk8s kubectl apply -f prometheus-config.yaml
 microk8s kubectl apply -f prometheus-deployment.yaml
 microk8s kubectl apply -f prometheus-service.yaml
